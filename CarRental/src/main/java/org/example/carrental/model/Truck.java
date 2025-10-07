@@ -3,10 +3,9 @@ package org.example.carrental.model;
 public class Truck extends Vehicle{
     private double loadCapacityKg;
 
-    // k. bezarg.?
-    Truck(Long id, String make, String model, int year, double getLoadCapacityKg){
-        super(id, make, model, year);
-        this.loadCapacityKg = getLoadCapacityKg;
+    public Truck(Long id, String plateNumber, String make, String model, int year, String colour, boolean isRented, double dailyPrice, double loadCapacityKg) {
+        super(id, plateNumber, make, model, year, colour, isRented, dailyPrice);
+        this.loadCapacityKg = getLoadCapacityKg();
     }
 
     public double getLoadCapacityKg() {
@@ -17,5 +16,4 @@ public class Truck extends Vehicle{
         this.loadCapacityKg = loadCapacityKg;
     }
 
-    // toString
 }

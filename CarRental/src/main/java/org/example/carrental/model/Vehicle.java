@@ -2,22 +2,26 @@ package org.example.carrental.model;
 
 public abstract class Vehicle {
     private Long id;
+    private String plateNumber;
     private String make;
     private String model;
     private int year;
-    private VehicleStatus status = VehicleStatus.AVAILABLE;
-    // field version ?
-    // konstruktor bezargumentowy ?
+    private String colour;
+    private boolean isRented;
+    private double dailyPrice;
 
-    public Vehicle(Long id, String make, String model, int year){
+    public Vehicle(Long id, String plateNumber, String make, String model, int year, String colour, boolean isRented, double dailyPrice){
         this.id = id;
+        this.plateNumber = plateNumber;
         this.make = make;
         this.model = model;
         this.year = year;
-        this.status = VehicleStatus.AVAILABLE;
+        this.colour = colour;
+        this.isRented = false;
+        this.dailyPrice = dailyPrice;
     }
 
-    public Long getId(){
+    public Long getId() {
         return id;
     }
 
@@ -25,49 +29,59 @@ public abstract class Vehicle {
         this.id = id;
     }
 
-    public String getMake(){
+    public String getPlateNumber() {
+        return plateNumber;
+    }
+
+    public void setPlateNumber(String plateNumber) {
+        this.plateNumber = plateNumber;
+    }
+
+    public String getMake() {
         return make;
     }
 
-    public void setMake(String make){
+    public void setMake(String make) {
         this.make = make;
     }
 
-    public String getModel(){
+    public String getModel() {
         return model;
     }
 
-    public void setModel(String model){
+    public void setModel(String model) {
         this.model = model;
     }
 
-    public int getYear(){
+    public int getYear() {
         return year;
     }
 
-    public void setYear(int year){
+    public void setYear(int year) {
         this.year = year;
     }
 
-    public VehicleStatus getStatus(){
-        return status;
+    public String getColour() {
+        return colour;
     }
 
-    public void setStatus(VehicleStatus status){
-        this.status = status;
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
-    public boolean isAvailable(){
-        return status == VehicleStatus.AVAILABLE;
+    public boolean isRented() {
+        return isRented;
     }
 
-    public void markRented(){
-        this.status = VehicleStatus.RENTED;
+    public void setRented(boolean rented) {
+        isRented = rented;
     }
 
-    public void markAvailable(){
-        this.status = VehicleStatus.AVAILABLE;
+    public double getDailyPrice() {
+        return dailyPrice;
     }
 
-    // toString
+    public void setDailyPrice(double dailyPrice) {
+        this.dailyPrice = dailyPrice;
+    }
 }

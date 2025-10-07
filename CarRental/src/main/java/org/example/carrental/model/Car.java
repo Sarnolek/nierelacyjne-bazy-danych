@@ -3,10 +3,8 @@ package org.example.carrental.model;
 public class Car extends Vehicle{
     private int seats;
 
-    // konstruktor bezargumentowy?
-
-    public Car(Long id, String make, String model, int year, int seats){
-        super(id, make, model, year);
+    public Car(Long id, String plateNumber, String make, String model, int year, String colour, boolean isRented, double dailyPrice, int seats) {
+        super(id, plateNumber, make, model, year, colour, isRented, dailyPrice);
         this.seats = seats;
     }
 
@@ -18,5 +16,4 @@ public class Car extends Vehicle{
         this.seats = seats;
     }
 
-    //  toString
 }

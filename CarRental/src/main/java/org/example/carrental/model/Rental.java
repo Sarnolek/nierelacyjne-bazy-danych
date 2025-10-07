@@ -1,24 +1,24 @@
 package org.example.carrental.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Rental {
     private Long id;
     private Client client;
     private Vehicle vehicle;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private RentalStatus status = RentalStatus.ACTIVE;
-    // field version?
-    // k. beza.?
+    private int durationInDays;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private double rentalPrice;
 
-    public Rental(Long id, Client client, Vehicle vehicle, LocalDate startDate, LocalDate endDate){
+    public Rental(Long id, Client client, Vehicle vehicle, int durationInDays){
         this.id = id;
         this.client = client;
         this.vehicle = vehicle;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.status = RentalStatus.ACTIVE;
+        this.durationInDays = durationInDays;
+        this.startDate = LocalDateTime.now();
+        this.endDate = this.startDate.plusDays(durationInDays);
+        this.rentalPrice = calculateRentalPrice(durationInDays);
     }
 
     public Long getId() {
@@ -45,41 +45,51 @@ public class Rental {
         this.vehicle = vehicle;
     }
 
-    public LocalDate getStartDate() {
+    public int getDurationInDays() {
+        return durationInDays;
+    }
+
+    public void setDurationInDays(int durationInDays) {
+        this.durationInDays = durationInDays;
+    }
+
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
-    public RentalStatus getStatus() {
-        return status;
+    public double getRentalPrice() {
+        return rentalPrice;
     }
 
-    public void setStatus(RentalStatus status) {
-        this.status = status;
+    public void setRentalPrice(double rentalPrice) {
+        this.rentalPrice = rentalPrice;
+    }
+
+    public void finishRent(){
+        this.endDate = LocalDateTime.now();
     }
 
     public boolean isActive(){
-        return status == RentalStatus.ACTIVE;
+        return endDate == null;
     }
 
-    public void complete(){
-        this.status = RentalStatus.COMPLETED;
+    public double calculateRentalPrice(double durationInDays){
+        return vehicle.getDailyPrice() * durationInDays * ( 1 - client.getClientType().getDiscount());
     }
 
-    public void cancled(){
-        this.status = RentalStatus.CANCELLED;
-    }
+    // metoda przedluzenia wypozyczenia
+    // metoda pozostalego czasu wypozyczenia
 
-    //toString
 }
