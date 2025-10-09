@@ -1,4 +1,4 @@
-package org.example.carrental.model;
+package pl.carrental.model;
 
 public class Truck extends Vehicle{
     private double loadCapacityKg;

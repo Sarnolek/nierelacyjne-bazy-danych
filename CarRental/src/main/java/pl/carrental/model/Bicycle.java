@@ -1,4 +1,4 @@
-package org.example.carrental.model;
+package pl.carrental.model;
 
 public class Bicycle extends Vehicle{
 private String type;

@@ -1,8 +1,10 @@
-package org.example.carrental;
+package pl.carrental;
 
 import org.example.carrental.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.carrental.model.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -30,7 +32,7 @@ class ClientTest {
 
     @Test
     void shouldAllowClientToRentWhenUnderLimit() {
-        assertTrue(client.canRent());
+        assertTrue(client.hasSlotForRent());
     }
 
 
@@ -39,7 +41,7 @@ class ClientTest {
         for (int i = 0; i < client.getClientType().getMaxVehicles(); i++) {
             client.addRent(new Rental((long) i, client, vehicle, 3));
         }
-        assertFalse(client.canRent());
+        assertFalse(client.hasSlotForRent());
     }
 
     @Test
@@ -95,6 +97,7 @@ class ClientTest {
         Client client1 = new Client(2L, "Mateusz","Brzeczyszczykiewicz", "monkey@gmail.com", ClientType.TYPE1, 100.0 );
         Rental rental = new Rental(1L, client1, vehicle, 2);
         //canRent sprawdza tylko czy dany klient ma jescze slota na wypozyczenie kolejnego auta, a nie na to czy np go stać na to
+        client1.addRent(rental);
         List<Rental> rentals = client1.getRents();
         assertEquals(0, rentals.size());
 

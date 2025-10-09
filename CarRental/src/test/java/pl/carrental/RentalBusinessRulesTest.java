@@ -1,4 +1,4 @@
-package org.example.carrental;
+package pl.carrental;
 
 public class RentalBusinessRulesTest {
 

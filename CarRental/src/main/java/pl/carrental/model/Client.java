@@ -1,4 +1,4 @@
-package org.example.carrental.model;
+package pl.carrental.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public class Client {
         return rents.size();
     }
 
-    public boolean canRent(){
+    public boolean hasSlotForRent(){
         return getAmountOfRents() < clientType.getMaxVehicles();
     }
 

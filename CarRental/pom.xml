@@ -26,6 +26,75 @@
             <version>5.11.3</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Jakarta Persistence API (JPA) i jego implementacja Hibernate -->
+
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.6.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jpamodelgen</artifactId>
+            <version>6.6.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-testing</artifactId>
+            <version>6.6.3.Final</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- sterownik bazy
+        danych, czyli oprogramowanie pozwalające na dostęp do
+        niej. W Java jest to sterownik JDBC -->
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.8</version>
+        </dependency>
+
+<!--        Bean Validation-->
+
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>9.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.expressly</groupId>
+            <artifactId>expressly</artifactId>
+            <version>6.0.0</version>
+        </dependency>
+
+<!-- testcontainers -->
+
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <version>1.21.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.19.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>1.19.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

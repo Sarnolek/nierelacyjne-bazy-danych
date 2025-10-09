@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+    <persistence-unit name="POSTGRES_RENT_PU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>pl.carrental.model.Bicycle</class>
+        <class>pl.carrental.model.Car</class>
+        <class>pl.carrental.model.Client</class>
+        <class>pl.carrental.model.ClientType</class>
+        <class>pl.carrental.model.Rental</class>
+        <class>pl.carrental.model.Truck</class>
+        <class>pl.carrental.model.Vehicle</class>
+<!--        <class>pl.kurs.model.converters.UUIDConverter</class>-->
+<!--        <class>pl.kurs.model.AbstractEntity</class>-->
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <shared-cache-mode>NONE</shared-cache-mode>
+        <validation-mode>CALLBACK</validation-mode>
+        <properties>
+<!--            <property name="jakarta.persistence.jdbc.driver" value="org.testcontainers.jdbc.ContainerDatabaseDriver"/>-->
+<!--            <property name="jakarta.persistence.jdbc.url" value="jdbc:tc:postgresql:17:///nbddb?TC_REUSABLE=true"/>-->
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/nbddb"/>
+            <property name="jakarta.persistence.jdbc.user" value="nbd"/>
+            <property name="jakarta.persistence.jdbc.password" value="nbdpassword"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

@@ -1,4 +1,4 @@
-package org.example.carrental.model;
+package pl.carrental.model;
 
 public abstract class Vehicle {
     private Long id;

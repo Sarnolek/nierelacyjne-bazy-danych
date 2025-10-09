@@ -1,4 +1,4 @@
-package org.example.carrental.model;
+package pl.carrental.model;
 
 public class Car extends Vehicle{
     private int seats;
