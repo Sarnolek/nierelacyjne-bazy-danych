@@ -1,18 +1,46 @@
 package pl.carrental.model;
 
+import jakarta.persistence.*;
+
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "rentals")
 public class Rental {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "rental_id", unique = true, nullable = false)
+    private Long rentalId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
+
+    @Column(name = "duration_in_days", nullable = false)
     private int durationInDays;
+
+    @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
+
+    @Column(name = "end_date")
     private LocalDateTime endDate;
+
+    @Column(name = "rental_price", nullable = false)
     private double rentalPrice;
 
-    public Rental(Long id, Client client, Vehicle vehicle, int durationInDays){
-        this.id = id;
+    public Rental() {
+    }
+
+    public Rental(Long rentalId, Client client, Vehicle vehicle, int durationInDays){
+        this.rentalId = rentalId;
         this.client = client;
         this.vehicle = vehicle;
         this.durationInDays = durationInDays;
@@ -21,12 +49,12 @@ public class Rental {
         this.rentalPrice = calculateRentalPrice(durationInDays);
     }
 
-    public Long getId() {
-        return id;
+    public Long getRentalId() {
+        return rentalId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRentalId(Long rentalId) {
+        this.rentalId = rentalId;
     }
 
     public Client getClient() {

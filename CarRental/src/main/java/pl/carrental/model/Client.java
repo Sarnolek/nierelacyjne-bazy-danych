@@ -1,20 +1,48 @@
 package pl.carrental.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Entity
+@Table(name = "clients")
 public class Client {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private ClientType clientType;
-    private double balance;
-    private List<Rental> rents = new ArrayList<>();
 
-    public Client(Long id, String firstName, String lastName, String email, ClientType clientType, double balance){
-        this.id = id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "client_id", unique = true, nullable = false)
+    private Long clientId;
+
+    @Column(name = "first_name", nullable = false, length = 50)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false, length = 50)
+    private String lastName;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "client_type", nullable = false)
+    private ClientType clientType;
+
+    @Column(name = "balance", nullable = false)
+    private double balance;
+
+    @OneToMany(
+            mappedBy = "client", // Wskazuje na pole 'client' w klasie Rental
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Rental>rents = new ArrayList<>();
+
+    public Client(Long clientId, String firstName, String lastName, String email, ClientType clientType, double balance){
+        this.clientId = clientId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -22,12 +50,16 @@ public class Client {
         this.balance = balance;
     }
 
-    public Long getId() {
-        return id;
+    // Konstruktor bezargumentowy wymagany przez JPA.
+    public Client() {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setId(Long clientId) {
+        this.clientId = clientId;
     }
 
     public String getFirstName() {
