@@ -1,9 +1,13 @@
 package pl.carrental;
 
-import org.example.carrental.model.*;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pl.carrental.model.*;
+import pl.carrental.vehicle.Truck;
+import pl.carrental.vehicle.Vehicle;
+import pl.carrental.client.Client;
+import pl.carrental.client.ClientType;
+import pl.carrental.service.Rental;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,7 +1,7 @@
-package pl.carrental.model;
+package pl.carrental.client;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
+import pl.carrental.service.Rental;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,10 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_id", unique = true, nullable = false)
+    @Version
+    private long version;
+
+    @Column(name = "client_id", unique = true, nullable = false, updatable = false)
     private Long clientId;
 
     @Column(name = "first_name", nullable = false, length = 50)
@@ -54,13 +57,17 @@ public class Client {
     public Client() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Long getClientId() {
         return clientId;
     }
 
-    public void setId(Long clientId) {
-        this.clientId = clientId;
-    }
+//    public void setId(Long clientId) {
+//        this.clientId = clientId;
+//    }
 
     public String getFirstName() {
         return firstName;

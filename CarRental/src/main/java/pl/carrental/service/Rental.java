@@ -1,6 +1,8 @@
-package pl.carrental.model;
+package pl.carrental.service;
 
 import jakarta.persistence.*;
+import pl.carrental.vehicle.Vehicle;
+import pl.carrental.client.Client;
 
 
 import java.time.LocalDateTime;
@@ -16,12 +18,13 @@ public class Rental {
     @Column(name = "rental_id", unique = true, nullable = false)
     private Long rentalId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = false)
+    // W klasie Rental.java
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vehicle_id", nullable = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
     @Column(name = "duration_in_days", nullable = false)
@@ -49,6 +52,9 @@ public class Rental {
         this.rentalPrice = calculateRentalPrice(durationInDays);
     }
 
+    public Long getId() {
+        return rentalId;
+    }
     public Long getRentalId() {
         return rentalId;
     }

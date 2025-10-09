@@ -1,4 +1,4 @@
-package pl.carrental.model;
+package pl.carrental.client;
 
 public enum ClientType {
     TYPE1(1, 0.10),

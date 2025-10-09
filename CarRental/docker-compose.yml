@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: nbd
       POSTGRES_PASSWORD: nbdpassword
     ports:
-      - 5433:5432
+      - 5555:5432
     volumes:
       - pg:/var/lib/postgresql/data
 volumes:
