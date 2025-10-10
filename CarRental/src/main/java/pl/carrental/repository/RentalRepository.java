@@ -14,7 +14,5 @@ public interface RentalRepository {
     List<Rental> findByClient(Client client);
     List<Rental> findByVehicle(Vehicle vehicle);
     Optional<Rental> findByRentalId(Long rentalId);
-    Optional<Vehicle> findByVehicleId(Long vehicleId);
-    Optional<Client> findByClientId(Long clientId);
     void delete(Rental rental);
 }

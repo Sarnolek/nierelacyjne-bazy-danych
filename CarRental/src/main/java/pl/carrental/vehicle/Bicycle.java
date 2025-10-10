@@ -4,7 +4,7 @@ package pl.carrental.vehicle;
 import jakarta.persistence.*;
 
 @Entity
-@DiscriminatorValue("Bicycle")
+@DiscriminatorValue("BICYCLE")
 public class Bicycle extends Vehicle {
 
 @Column(name = "bicycle_type")
@@ -14,8 +14,8 @@ private String type;
         super();
     }
 
-    public Bicycle(Long vehicleId, String plateNumber, String make, String model, int year, String colour, boolean isRented, double dailyPrice, String type) {
-        super(vehicleId, plateNumber, make, model, year, colour, isRented, dailyPrice);
+    public Bicycle(Long vehicleId, String plateNumber, String make, String model, int year, String colour, double dailyPrice, String type) {
+        super(vehicleId, plateNumber, make, model, year, colour, dailyPrice);
         this.type = type;
     }
 

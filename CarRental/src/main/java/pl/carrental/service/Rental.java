@@ -18,13 +18,15 @@ public class Rental {
     @Column(name = "rental_id", unique = true, nullable = false)
     private Long rentalId;
 
-    // W klasie Rental.java
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "client_id")
+    @Version
+    private long version;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "vehicle_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
     @Column(name = "duration_in_days", nullable = false)
@@ -33,8 +35,11 @@ public class Rental {
     @Column(name = "start_date", nullable = false)
     private LocalDateTime startDate;
 
-    @Column(name = "end_date")
-    private LocalDateTime endDate;
+    @Column(name = "planned_end_date", nullable = false)
+    private LocalDateTime plannedEndDate;
+
+    @Column(name = "actual_return_date")
+    private LocalDateTime actualReturnDate;
 
     @Column(name = "rental_price", nullable = false)
     private double rentalPrice;
@@ -48,12 +53,13 @@ public class Rental {
         this.vehicle = vehicle;
         this.durationInDays = durationInDays;
         this.startDate = LocalDateTime.now();
-        this.endDate = this.startDate.plusDays(durationInDays);
+        this.plannedEndDate = this.startDate.plusDays(durationInDays);
         this.rentalPrice = calculateRentalPrice(durationInDays);
+        this.actualReturnDate = null;
     }
 
     public Long getId() {
-        return rentalId;
+        return id;
     }
     public Long getRentalId() {
         return rentalId;
@@ -95,12 +101,12 @@ public class Rental {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
-        return endDate;
+    public LocalDateTime getPlannedEndDate() {
+        return plannedEndDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
-        this.endDate = endDate;
+    public void setPlannedEndDate(LocalDateTime endDate) {
+        this.plannedEndDate = endDate;
     }
 
     public double getRentalPrice() {
@@ -111,12 +117,12 @@ public class Rental {
         this.rentalPrice = rentalPrice;
     }
 
-    public void finishRent(){
-        this.endDate = LocalDateTime.now();
+    public void finishRent() {
+        this.actualReturnDate = LocalDateTime.now();
     }
 
-    public boolean isActive(){
-        return endDate == null;
+    public boolean isActive() {
+        return this.actualReturnDate == null;
     }
 
     public double calculateRentalPrice(double durationInDays){

@@ -1,9 +1,9 @@
 package pl.carrental.client;
 
 public enum ClientType {
-    TYPE1(1, 0.10),
-    TYPE2(2, 0.20),
-    TYPE3(3, 0.30);
+    STANDARD(1, 0.0),
+    ADVANCED(2, 0.10),
+    BUSINESS(3, 0.30);
 
     private final int maxVehicles;
     private final double discount;

@@ -10,8 +10,8 @@ public class Truck extends Vehicle {
     @Column(name = "load_capacity_kg")
     private double loadCapacityKg;
 
-    public Truck(Long vehicleId, String plateNumber, String make, String model, int year, String colour, boolean isRented, double dailyPrice, double loadCapacityKg) {
-        super(vehicleId, plateNumber, make, model, year, colour, isRented, dailyPrice);
+    public Truck(Long vehicleId, String plateNumber, String make, String model, int year, String colour, double dailyPrice, double loadCapacityKg) {
+        super(vehicleId, plateNumber, make, model, year, colour, dailyPrice);
         this.loadCapacityKg = getLoadCapacityKg();
     }
 

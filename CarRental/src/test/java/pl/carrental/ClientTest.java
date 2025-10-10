@@ -20,7 +20,7 @@ class ClientTest {
 
     @BeforeEach
     void setUp() {
-        client = new Client(1L, "Jan", "Kowalski", "jan@example.com", ClientType.TYPE1, 1000.0);
+        client = new Client(1L, "Jan", "Kowalski", "jan@example.com", ClientType.STANDARD, 1000.0);
         vehicle = new Truck(1L, "XYZ123", "Volvo", "FH16", 2020, "Blue", false, 200.0, 5000);
     }
 
@@ -98,7 +98,7 @@ class ClientTest {
     // Czy klient z małym saldem nie może wypożyczyć drogiego auta
     @Test
     void cantRentWhenClientHasNotEnoughBalance() {
-        Client client1 = new Client(2L, "Mateusz","Brzeczyszczykiewicz", "monkey@gmail.com", ClientType.TYPE1, 100.0 );
+        Client client1 = new Client(2L, "Mateusz","Brzeczyszczykiewicz", "monkey@gmail.com", ClientType.STANDARD, 100.0 );
         Rental rental = new Rental(1L, client1, vehicle, 2);
         //canRent sprawdza tylko czy dany klient ma jescze slota na wypozyczenie kolejnego auta, a nie na to czy np go stać na to
         client1.addRent(rental);

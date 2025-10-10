@@ -37,12 +37,12 @@ public class Client {
     private double balance;
 
     @OneToMany(
-            mappedBy = "client", // Wskazuje na pole 'client' w klasie Rental
+            mappedBy = "client",
             cascade = CascadeType.ALL,
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<Rental>rents = new ArrayList<>();
+    private List<Rental> rents = new ArrayList<>();
 
     public Client(Long clientId, String firstName, String lastName, String email, ClientType clientType, double balance){
         this.clientId = clientId;
@@ -53,7 +53,6 @@ public class Client {
         this.balance = balance;
     }
 
-    // Konstruktor bezargumentowy wymagany przez JPA.
     public Client() {
     }
 
@@ -64,10 +63,6 @@ public class Client {
     public Long getClientId() {
         return clientId;
     }
-
-//    public void setId(Long clientId) {
-//        this.clientId = clientId;
-//    }
 
     public String getFirstName() {
         return firstName;
@@ -135,10 +130,12 @@ public class Client {
 
     public void addRent(Rental rent){
         rents.add(rent);
+        rent.setClient(this);
     }
 
     public void removeRent(Rental rent){
         rents.remove(rent);
+        rent.setClient(null);
     }
 
 }

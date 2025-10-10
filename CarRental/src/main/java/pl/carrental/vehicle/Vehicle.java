@@ -2,6 +2,10 @@ package pl.carrental.vehicle;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import pl.carrental.service.Rental;
+
+import java.util.*;
+
 
 @Entity
 @Table(name = "vehicles")
@@ -16,7 +20,7 @@ public abstract class Vehicle {
     @Version
     private long version;
 
-    @Column(name = "vehicle_Id",length = 50, nullable = false,  unique = true, updatable = false)
+    @Column(name = "vehicle_id",length = 50, nullable = false,  unique = true, updatable = false)
     private Long vehicleId;
 
     @Column(name = "plate_number", unique = true, nullable = false)
@@ -42,10 +46,18 @@ public abstract class Vehicle {
     @Column(name = "daily_price", nullable = false)
     private double dailyPrice;
 
+    @OneToMany(
+            mappedBy = "vehicle",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Rental> rents = new ArrayList<>();
+
     public Vehicle() {
     }
 
-    public Vehicle(Long vehicleId, String plateNumber, String make, String model, int year, String colour, boolean isRented, double dailyPrice){
+    public Vehicle(Long vehicleId, String plateNumber, String make, String model, int year, String colour, double dailyPrice){
         this.vehicleId = vehicleId;
         this.plateNumber = plateNumber;
         this.make = make;
@@ -62,10 +74,6 @@ public abstract class Vehicle {
 
     public Long getVehicleId() {
         return vehicleId;
-    }
-
-    public void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
     }
 
     public String getPlateNumber() {
@@ -123,4 +131,23 @@ public abstract class Vehicle {
     public void setDailyPrice(double dailyPrice) {
         this.dailyPrice = dailyPrice;
     }
+
+    public List<Rental> getRentals() {
+        return rents;
+    }
+
+    public void setRentals(List<Rental> rentals) {
+        this.rents = rentals;
+    }
+
+    public void addRental(Rental rental){
+        this.rents.add(rental);
+        rental.setVehicle(this);
+    }
+
+    public void removeRental(Rental rental){
+        this.rents.remove(rental);
+        rental.setVehicle(null);
+    }
+
 }

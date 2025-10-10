@@ -37,22 +37,6 @@ public class RentalRepositoryImpl implements RentalRepository {
     }
 
     @Override
-    public Optional<Vehicle> findByVehicleId(Long vehicleId) {
-        return em.createQuery("SELECT v FROM Vehicle v WHERE v.vehicleId = :vehicleId", Vehicle.class)
-                .setParameter("vehicleId", vehicleId)
-                .getResultStream()
-                .findFirst();
-    }
-
-    @Override
-    public Optional<Client> findByClientId(Long clientId){
-        return em.createQuery("SELECT c FROM Client c WHERE c.clientId = :clientId", Client.class)
-                .setParameter("clientId", clientId)
-                .getResultStream()
-                .findFirst();
-    }
-
-    @Override
     public Optional<Rental> findByRentalId(Long rentalId){
         return em.createQuery("SELECT r FROM Rental r WHERE r.rentalId = :rentalId", Rental.class)
                 .setParameter("rentalId", rentalId)

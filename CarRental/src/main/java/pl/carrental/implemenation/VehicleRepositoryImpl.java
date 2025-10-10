@@ -16,7 +16,6 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public void save(Vehicle vehicle){
-        // Zarządzanie transakcjami (begin/commit) docelowo powinno być w warstwie serwisowej!
         if (vehicle.getId() == null) {
             em.persist(vehicle);
         } else
@@ -25,7 +24,6 @@ public class VehicleRepositoryImpl implements VehicleRepository {
 
     @Override
     public Optional<Vehicle> findById(Long id){
-        // może zwrócić null
         return Optional.ofNullable(em.find(Vehicle.class, id));
     }
 
