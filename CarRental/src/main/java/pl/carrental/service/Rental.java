@@ -47,6 +47,8 @@ public class Rental {
     public Rental() {
     }
 
+
+
     public Rental(Long rentalId, Client client, Vehicle vehicle, int durationInDays){
         this.rentalId = rentalId;
         this.client = client;
@@ -127,6 +129,10 @@ public class Rental {
 
     public double calculateRentalPrice(double durationInDays){
         return vehicle.getDailyPrice() * durationInDays * ( 1 - client.getClientType().getDiscount());
+    }
+
+    public LocalDateTime getActualReturnDate() {
+        return actualReturnDate;
     }
 
     // metoda przedluzenia wypozyczenia
