@@ -42,6 +42,13 @@ public class RentalService {
                         String.format("Niewystarczające środki na koncie. Wymagane: %.2f zł, dostępne: %.2f zł.", totalCost, client.getBalance())
                 );
             }
+            if (vehicle.isRented()) {
+                throw new IllegalStateException("Pojazd jest już wypożyczony!");
+            }
+
+            if (!client.hasSlotForRent()) {
+                throw new IllegalStateException("Klient osiągnął maksymalny limit wypożyczonych pojazdów: " + client.getClientType().getMaxVehicles());
+            }
 
             System.out.println("Wszystkie reguły biznesowe zostały spełnione.");
 

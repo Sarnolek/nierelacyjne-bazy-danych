@@ -124,8 +124,17 @@
             return rents.size();
         }
 
+        public long getActiveRentalsCount() {
+            if (rents == null) {
+                return 0;
+            }
+            return this.rents.stream()
+                    .filter(Rental::isActive)
+                    .count();
+        }
+
         public boolean hasSlotForRent(){
-            return getAmountOfRents() < clientType.getMaxVehicles();
+            return getActiveRentalsCount() < clientType.getMaxVehicles();
         }
 
         public void addRent(Rental rent){

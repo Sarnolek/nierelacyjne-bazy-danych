@@ -36,7 +36,6 @@ class VehicleRepositoryImplTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("should save different vehicle types and find them all")
     void saveAndFindAll_shouldWorkForSubtypes() {
         Vehicle car = new Car(1L, "CAR1", "BMW", "3", 2020, "Szary", 200.0, 5);
         Vehicle truck = new Truck(2L, "TRUCK1", "Scania", "R", 2019, "Czerwony", 400.0, 20000.0);

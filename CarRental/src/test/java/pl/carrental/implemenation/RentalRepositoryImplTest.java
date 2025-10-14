@@ -45,7 +45,6 @@ class RentalRepositoryImplTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("should save a new rental and link it correctly")
     void save_shouldPersistNewRental() {
         // GIVEN
         Rental newRental = new Rental(501L, testClient, testVehicle, 5);
@@ -63,7 +62,6 @@ class RentalRepositoryImplTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("should find all rentals for a specific client")
     void findByClient_shouldReturnClientRentals() {
         // GIVEN
         Rental rental1 = new Rental(601L, testClient, testVehicle, 2);

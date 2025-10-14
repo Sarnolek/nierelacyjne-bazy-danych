@@ -34,7 +34,6 @@ class ClientRepositoryImplTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("should save a new client to the database")
     void save_shouldPersistNewClient() {
         Client newClient = new Client(1L, "Tomasz", "Kot", "tomasz.kot@test.com", ClientType.STANDARD, 200.0);
 
@@ -48,7 +47,6 @@ class ClientRepositoryImplTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("should find a client by its business ID (clientId)")
     void findByClientId_shouldReturnCorrectClient() {
         long businessId = 99L;
         Client client = new Client(businessId, "Agata", "Buzek", "agata.buzek@test.com", ClientType.BUSINESS, 10000.0);
@@ -63,7 +61,6 @@ class ClientRepositoryImplTest extends BaseIntegrationTest {
     }
 
     @Test
-    @DisplayName("should delete a client from the database")
     void delete_shouldRemoveClient() {
         Client clientToDelete = new Client(1L, "Test", "Delete", "delete@test.com", ClientType.STANDARD, 0.0);
         em.getTransaction().begin();
