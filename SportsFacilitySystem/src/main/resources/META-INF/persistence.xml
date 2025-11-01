@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+    <persistence-unit name="POSTGRES_RENT_PU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>pl.carrental.vehicle.Bicycle</class>
+        <class>pl.carrental.vehicle.Car</class>
+        <class>pl.carrental.vehicle.Truck</class>
+        <class>pl.carrental.vehicle.Vehicle</class>
+        <class>pl.carrental.client.Client</class>
+        <class>pl.carrental.client.ClientType</class>
+        <class>pl.carrental.service.Rental</class>
+        <class>pl.carrental.service.RentalService</class>
+        <class>pl.carrental.repository.ClientRepository</class>
+        <class>pl.carrental.repository.RentalRepository</class>
+        <class>pl.carrental.repository.VehicleRepository</class>
+        <class>pl.carrental.implemenation.ClientRepositoryImpl</class>
+        <class>pl.carrental.implemenation.RentalRepositoryImpl</class>
+        <class>pl.carrental.implemenation.VehicleRepositoryImpl</class>
+        <exclude-unlisted-classes>true</exclude-unlisted-classes>
+        <shared-cache-mode>NONE</shared-cache-mode>
+        <validation-mode>CALLBACK</validation-mode>
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5555/nbddb"/>
+            <property name="jakarta.persistence.jdbc.user" value="nbd"/>
+            <property name="jakarta.persistence.jdbc.password" value="nbdpassword"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.connection.isolation" value="2"/>
+        </properties>
+    </persistence-unit>
+</persistence>
