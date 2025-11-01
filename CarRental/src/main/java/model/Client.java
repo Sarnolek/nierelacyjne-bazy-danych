@@ -2,10 +2,13 @@ package model;
 
 import java.util.UUID;
 
+// Na PAS bedzie abstrakcyjny User, a dziewdziczyć będzie Admin, FacilityManager, Client
 public class Client {
     private UUID id;
     private String firstName;
     private String lastName;
+    // boolean isActive;
+    // jeszcze login
 
     public Client() {
     }

@@ -6,6 +6,7 @@ import java.util.*;
 
 public class InMemoryClientRepository implements ClientRepository{
     private final HashMap<UUID, Client> clients = new HashMap<>();
+    // pod PAS rozważyć ConcurrentHashMap do obłsugi wielowątkowości
 
     @Override
     public Client save(Client client) {

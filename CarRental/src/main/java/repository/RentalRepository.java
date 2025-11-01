@@ -12,5 +12,6 @@ public interface RentalRepository {
     List<Rental> findAll();
     void deleteById(UUID id);
 
+    List<Rental> findByClientId(UUID clientId);
     List<Rental> findByFacilityId(UUID facilityId);
 }

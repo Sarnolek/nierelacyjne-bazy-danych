@@ -29,6 +29,11 @@ public class InMemoryRentalRepository implements RentalRepository{
     }
 
     @Override
+    public List<Rental> findByClientId(UUID clientId) {
+        return rentals.values().stream().filter(rental -> rental.getClientId().equals(clientId)).collect(Collectors.toList());
+    }
+
+    @Override
     public List<Rental> findByFacilityId(UUID facilityId) {
         return rentals.values().stream()
                 .filter(rental -> rental.getFacilityId().equals(facilityId))
