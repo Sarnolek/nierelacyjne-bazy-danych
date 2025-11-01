@@ -31,7 +31,7 @@ https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
             <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.connection.isolation" value="2"/> <!--2: READ_COMMITTED (domyślny dla PostgreSQL)-->
+            <property name="hibernate.connection.isolation" value="2"/>
         </properties>
     </persistence-unit>
 </persistence>
