@@ -26,7 +26,7 @@ public class MongoDbManager {
 
     public static void init() {
         ConnectionString connectionString = new ConnectionString(
-                "mongodb://admin:adminpassword@localhost:27017,localhost:27018,localhost:27019/?replicaSet=rs0&authSource=admin"
+                "mongodb://admin:adminpassword@mongo1:27017,mongo2:27018,mongo3:27019/?replicaSet=rs0&authSource=admin"
         );
 
         CodecRegistry pojoCodecRegistry = CodecRegistries.fromProviders(

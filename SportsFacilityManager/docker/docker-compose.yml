@@ -26,6 +26,9 @@ services:
       - "27018:27017"
     volumes:
       - mongo-data-2:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
     healthcheck:
       test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
       interval: 10s
@@ -41,6 +44,9 @@ services:
       - "27019:27017"
     volumes:
       - mongo-data-3:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
     healthcheck:
       test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
       interval: 10s
@@ -50,6 +56,8 @@ services:
   mongo-init:
     image: mongo:6.0
     container_name: mongo-init
+    volumes: # <-- BRAKUJĄCA SEKCJA
+      - ./keyFile:/etc/mongo/keyFile
     depends_on:
       mongo1: { condition: service_healthy }
       mongo2: { condition: service_healthy }
@@ -59,13 +67,14 @@ services:
       --username admin 
       --password adminpassword 
       --authenticationDatabase admin 
+      --keyFile /etc/mongo/keyFile    
       --eval '
         rs.initiate({
           _id: "rs0",
           members: [
             { _id: 0, host: "mongo1:27017" },
-            { _id: 1, host: "mongo2:27017" },
-            { _id: 2, host: "mongo3:27017" }
+            { _id: 1, host: "mongo2:27018" }, 
+            { _id: 2, host: "mongo3:27019" }   
           ]
         })
       '
@@ -75,5 +84,3 @@ volumes:
   mongo-data-1:
   mongo-data-2:
   mongo-data-3:
-
-    
