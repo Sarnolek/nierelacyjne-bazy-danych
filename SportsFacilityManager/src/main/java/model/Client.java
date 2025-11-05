@@ -1,19 +1,27 @@
 package model;
 
+import org.bson.codecs.pojo.annotations.*;
+
 import java.util.UUID;
 
 // Na PAS bedzie abstrakcyjny User, a dziewdziczyć będzie Admin, FacilityManager, Client
 public class Client {
+    @BsonId
     private UUID id;
+
+    @BsonProperty("first_name")
     private String firstName;
+
+    @BsonProperty("last_name")
     private String lastName;
     // boolean isActive;
     // jeszcze login
 
-    public Client() {
-    }
+//    public Client() {
+//    }
 
-    public Client(String firstName, String lastName) {
+        @BsonCreator
+    public Client(@BsonProperty("first_name") String firstName, @BsonProperty("last_name") String lastName) {
         this.id = UUID.randomUUID();
         this.firstName = firstName;
         this.lastName = lastName;

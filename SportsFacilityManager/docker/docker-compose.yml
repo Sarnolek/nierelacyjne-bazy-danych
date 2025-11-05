@@ -1,0 +1,77 @@
+services:
+  mongo1:
+    build: .
+    container_name: mongo1
+    hostname: mongo1
+    command: ["--replSet", "rs0", "--bind_ip", "localhost,mongo1", "--config", "/etc/mongod.conf"]
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data-1:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+    healthcheck:
+      test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo2:
+    build: .
+    container_name: mongo2
+    hostname: mongo2
+    command: ["--replSet", "rs0", "--bind_ip", "localhost,mongo2", "--config", "/etc/mongod.conf"]
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data-2:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo3:
+    build: .
+    container_name: mongo3
+    hostname: mongo3
+    command: ["--replSet", "rs0", "--bind_ip", "localhost,mongo3", "--config", "/etc/mongod.conf"]
+    ports:
+      - "27019:27017"
+    volumes:
+      - mongo-data-3:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongo-init:
+    image: mongo:6.0
+    container_name: mongo-init
+    depends_on:
+      mongo1: { condition: service_healthy }
+      mongo2: { condition: service_healthy }
+      mongo3: { condition: service_healthy }
+    command: >
+      mongosh --host mongo1:27017 
+      --username admin 
+      --password adminpassword 
+      --authenticationDatabase admin 
+      --eval '
+        rs.initiate({
+          _id: "rs0",
+          members: [
+            { _id: 0, host: "mongo1:27017" },
+            { _id: 1, host: "mongo2:27017" },
+            { _id: 2, host: "mongo3:27017" }
+          ]
+        })
+      '
+    restart: on-failure
+
+volumes:
+  mongo-data-1:
+  mongo-data-2:
+  mongo-data-3:

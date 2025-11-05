@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cd2ab6d3-c06e-43b5-ab7f-0d5b2e77569c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/nierelacyjne-bazy-danych.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/nierelacyjne-bazy-danych.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/model/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/model/Gym.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/model/Rental.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/model/SportsFacility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/model/SurfaceType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/model/SwimmingPool.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/model/TennisCourt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/repository/ClientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/repository/InMemoryClientRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/repository/InMemoryRentalRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/repository/InMemorySportsFacilityRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/repository/RentalRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/repository/SportsFacilityRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/service/RentalException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/service/RentalService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/java/service/RentalServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarRental/src/main/resources/META-INF/persistence.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbd_mc_kd_zad1.zip" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="352HuUdWvpo077511Bv3Hbo52fi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "MongoDB",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/karol/OneDrive/Pulpit/sem 5/nierelacyjne-bazy-danych",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cd2ab6d3-c06e-43b5-ab7f-0d5b2e77569c" name="Changes" comment="" />
+      <created>1762301468189</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762301468189</updated>
+      <workItem from="1762301469340" duration="108000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

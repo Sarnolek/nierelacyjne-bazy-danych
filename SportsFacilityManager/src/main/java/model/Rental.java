@@ -1,16 +1,35 @@
 package model;
 
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Rental {
+    @BsonId
     private UUID id;
+
+    @BsonProperty("client_id")
     private UUID clientId;
+
+    @BsonProperty("facility_id")
     private UUID facilityId;
+
+    @BsonProperty("start_time")
     private LocalDateTime startTime;
+
+    @BsonProperty("end_time")
     private LocalDateTime endTime;
 
-    public Rental(UUID clientId, UUID facilityId, LocalDateTime startTime, LocalDateTime endTime) {
+//    public Rental(){}
+
+        @BsonCreator
+    public Rental(@BsonProperty("client_id") UUID clientId,
+                  @BsonProperty("facility_id") UUID facilityId,
+                  @BsonProperty("start_time") LocalDateTime startTime,
+                  @BsonProperty("end_time") LocalDateTime endTime) {
         this.id = UUID.randomUUID();
         this.clientId = clientId;
         this.facilityId = facilityId;
