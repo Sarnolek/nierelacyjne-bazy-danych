@@ -59,14 +59,16 @@ public class RentalServiceImpl implements RentalService{
 
             try {
 
+                // 1. NAJPIERW sprawdź dostępność terminu
+                if (!isFacilityAvailableInTransaction(session, facilityId, startTime, endTime)) {
+                    throw new RentalException("Obiekt sportowy o ID: " + facilityId + " jest juz wypozyczony w tym terminie.");
+                }
+
+                // 2. DOPIERO POTEM inkrementuj licznik (jeśli walidacja schematu jest aktywna)
                 UpdateResult updateResult = facilityCollection.updateOne(session,
                         Filters.eq("_id", facilityId),
                         Updates.inc("is_rented", 1)
                 );
-
-                if (!isFacilityAvailableInTransaction(session, facilityId, startTime, endTime)) {
-                    throw new RentalException("Obiekt sportowy o ID: " + facilityId + " jest juz wypozyczony w tym terminie.");
-                }
 
                 Rental newRental = new Rental(clientId, facilityId, startTime, endTime);
                 rentalCollection.insertOne(session, newRental);
