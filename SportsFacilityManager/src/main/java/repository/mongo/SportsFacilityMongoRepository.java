@@ -31,7 +31,6 @@ public class SportsFacilityMongoRepository implements SportsFacilityRepository {
 
     @Override
     public Optional<SportsFacility> findById(UUID id) {
-        // Zwróci poprawny obiekt (Gym, TennisCourt...) dzięki polu "type"
         SportsFacility facility = collection.find(Filters.eq("_id", id)).first();
         return Optional.ofNullable(facility);
     }

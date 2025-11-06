@@ -1,86 +1,107 @@
 services:
-  mongo1:
-    build: .
-    container_name: mongo1
-    hostname: mongo1
-    command: ["--replSet", "rs0", "--bind_ip", "localhost,mongo1", "--config", "/etc/mongod.conf"]
+  mongo_1:
+    build:
+      context: .
+    image: mongocustom-sportsfacility
+    container_name: mongodb1
+    hostname: mongodb1
+    networks:
+      - mongonet
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data-1:/data/db
+      - mongo-db-data-1:/data/db
+      - mongo-configdb-data-1:/data/configdb
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+      MONGO_INITDB_DATABASE: sportsfacility
+    command: --config /etc/mongod.conf --port 27017
     healthcheck:
-      test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
+      test: [ "CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  mongo2:
-    build: .
-    container_name: mongo2
-    hostname: mongo2
-    command: ["--replSet", "rs0", "--bind_ip", "localhost,mongo2", "--config", "/etc/mongod.conf"]
+  mongo_2:
+    image: mongocustom-sportsfacility
+    container_name: mongodb2
+    hostname: mongodb2
+    networks:
+      - mongonet
     ports:
-      - "27018:27017"
+      - "27018:27018"
     volumes:
-      - mongo-data-2:/data/db
+      - mongo-db-data-2:/data/db
+      - mongo-configdb-data-2:/data/configdb
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+      MONGO_INITDB_DATABASE: sportsfacility
+    command: --config /etc/mongod.conf --port 27018
     healthcheck:
-      test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
+      test: [ "CMD", "mongosh", "--port", "27018", "--eval", "db.adminCommand('ping')" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  mongo3:
-    build: .
-    container_name: mongo3
-    hostname: mongo3
-    command: ["--replSet", "rs0", "--bind_ip", "localhost,mongo3", "--config", "/etc/mongod.conf"]
+  mongo_3:
+    image: mongocustom-sportsfacility
+    container_name: mongodb3
+    hostname: mongodb3
+    networks:
+      - mongonet
     ports:
-      - "27019:27017"
+      - "27019:27019"
     volumes:
-      - mongo-data-3:/data/db
+      - mongo-db-data-3:/data/db
+      - mongo-configdb-data-3:/data/configdb
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=adminpassword
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: adminpassword
+      MONGO_INITDB_DATABASE: sportsfacility
+    command: --config /etc/mongod.conf --port 27019
     healthcheck:
-      test: ["CMD", "mongosh", "--port", "27017", "--eval", "db.adminCommand('ping')"]
+      test: [ "CMD", "mongosh", "--port", "27019", "--eval", "db.adminCommand('ping')" ]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  mongo-init:
-    image: mongo:6.0
-    container_name: mongo-init
-    volumes: # <-- BRAKUJĄCA SEKCJA
-      - ./keyFile:/etc/mongo/keyFile
+  mongoinit:
+    image: mongocustom-sportsfacility
+    hostname: mongodbinit
+    container_name: mongodbinit
+    networks:
+      - mongonet
     depends_on:
-      mongo1: { condition: service_healthy }
-      mongo2: { condition: service_healthy }
-      mongo3: { condition: service_healthy }
+      mongo_1:
+        condition: service_healthy
+      mongo_2:
+        condition: service_healthy
+      mongo_3:
+        condition: service_healthy
     command: >
-      mongosh --host mongo1:27017 
-      --username admin 
-      --password adminpassword 
-      --authenticationDatabase admin 
-      --keyFile /etc/mongo/keyFile    
-      --eval '
-        rs.initiate({
-          _id: "rs0",
-          members: [
-            { _id: 0, host: "mongo1:27017" },
-            { _id: 1, host: "mongo2:27018" }, 
-            { _id: 2, host: "mongo3:27019" }   
-          ]
-        })
-      '
-    restart: on-failure
+      mongosh --host mongodb1:27017 --username admin --password adminpassword --authenticationDatabase admin --eval "
+        rs.initiate(
+          {
+            _id: \"sportsfacility_set_single\",
+            version: 1,
+            members: [
+              {_id: 0, host: \"mongodb1:27017\"},
+              {_id: 1, host: \"mongodb2:27018\"},
+              {_id: 2, host: \"mongodb3:27019\"}
+            ]
+          }
+        );
+      "
+
+networks:
+  mongonet: {}
 
 volumes:
-  mongo-data-1:
-  mongo-data-2:
-  mongo-data-3:
+  mongo-db-data-1:
+  mongo-configdb-data-1:
+  mongo-db-data-2:
+  mongo-configdb-data-2:
+  mongo-db-data-3:
+  mongo-configdb-data-3:

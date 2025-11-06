@@ -53,13 +53,10 @@ class RentalServiceTest {
 
     @BeforeEach
     void setupEach() {
-        // Czyścimy wszystkie kolekcje
         db.getCollection("rentals").drop();
         db.getCollection("clients").drop();
         db.getCollection("facilities").drop();
 
-        // Ponownie tworzymy kolekcję 'facilities' z walidacją schematu (jak w Main.java)
-        // To jest kluczowe dla testu logiki biznesowej
         try {
             Document schema = Document.parse("{" +
                     "  $jsonSchema: {" +
@@ -68,7 +65,7 @@ class RentalServiceTest {
                     "      is_rented: {" +
                     "        bsonType: 'int'," +
                     "        minimum: 0," +
-                    "        maximum: 1" + // REGULAMIN BIZNESOWY
+                    "        maximum: 1" +
                     "      }" +
                     "    }" +
                     "  }" +
@@ -81,10 +78,8 @@ class RentalServiceTest {
                     new CreateCollectionOptions().validationOptions(validationOptions)
             );
         } catch (MongoCommandException e) {
-            // Kolekcja już istnieje (może się zdarzyć w rzadkich przypadkach)
         }
 
-        // Tworzymy dane testowe
         testClient = new Client("Testowy", "Klient");
         testFacility = new Gym("Testowa Siłownia", 10.0, 10, 100, false);
         clientRepo.save(testClient);
@@ -102,7 +97,6 @@ class RentalServiceTest {
         assertNotNull(rental);
         assertEquals(testClient.getId(), rental.getClientId());
 
-        // Weryfikacja, czy flaga 'is_rented' została ustawiona na 1
         SportsFacility facilityAfter = facilityRepo.findById(testFacility.getId()).get();
         assertEquals(1, facilityAfter.getIsRented(), "Flaga 'is_rented' powinna być 1 po rezerwacji");
     }
@@ -111,15 +105,13 @@ class RentalServiceTest {
     @Order(2)
     void testRentFacility_Fail_OverlappingTime() throws RentalException {
         LocalDateTime start1 = LocalDateTime.now().plusDays(1).withHour(10);
-        LocalDateTime end1 = start1.plusHours(2); // 10:00 - 12:00
+        LocalDateTime end1 = start1.plusHours(2);
 
-        // Pierwsza rezerwacja - powinna się udać
         rentalService.rentFacility(testClient.getId(), testFacility.getId(), start1, end1);
 
-        LocalDateTime start2 = LocalDateTime.now().plusDays(1).withHour(11); // 11:00 - 12:00
+        LocalDateTime start2 = LocalDateTime.now().plusDays(1).withHour(11);
         LocalDateTime end2 = start2.plusHours(1);
 
-        // Druga rezerwacja (nakładająca się) - powinna rzucić wyjątkiem (sprawdzenie logiki w serwisie)
         RentalException exception = assertThrows(RentalException.class, () -> {
             rentalService.rentFacility(testClient.getId(), testFacility.getId(), start2, end2);
         });
@@ -134,7 +126,6 @@ class RentalServiceTest {
         LocalDateTime end = start.plusHours(2);
 
         RentalException exception = assertThrows(RentalException.class, () -> {
-            // Używamy losowego UUID, który nie istnieje w bazie
             rentalService.rentFacility(UUID.randomUUID(), testFacility.getId(), start, end);
         });
 
@@ -144,27 +135,17 @@ class RentalServiceTest {
     @Test
     @Order(4)
     void testRentFacility_Fail_SchemaValidation() throws RentalException {
-        // Ten test sprawdza regułę biznesową zaimplementowaną na poziomie bazy danych
-
-        // 1. Pierwsza rezerwacja (ustawia is_rented = 1)
         LocalDateTime start1 = LocalDateTime.now().plusDays(1).withHour(10);
         LocalDateTime end1 = start1.plusHours(2);
         rentalService.rentFacility(testClient.getId(), testFacility.getId(), start1, end1);
 
-        // 2. Druga rezerwacja (inny termin, więc przejdzie walidację serwisu,
-        //    ale próba inkrementacji 'is_rented' z 1 na 2 zostanie zablokowana przez bazę danych)
         LocalDateTime start2 = LocalDateTime.now().plusDays(2).withHour(10);
         LocalDateTime end2 = start2.plusHours(2);
-
-        // Serwis spróbuje wykonać Updates.inc("is_rented", 1), co da 2
-        // Baza danych rzuci MongoWriteException (code 121), bo 'maximum: 1'
-        // Serwis powinien to złapać i opakować w RentalException
 
         RentalException exception = assertThrows(RentalException.class, () -> {
             rentalService.rentFacility(testClient.getId(), testFacility.getId(), start2, end2);
         });
 
-        // Weryfikujemy, czy wyjątek pochodzi z walidacji schematu (zgodnie z logiką w RentalServiceImpl)
         assertTrue(exception.getMessage().contains("jest juz wypozyczony (Walidacja schematu)"));
     }
 }

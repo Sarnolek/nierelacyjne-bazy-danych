@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Tag("failover") // Oznaczamy jako test failover, można go wykluczyć z normalnego builda
+@Tag("failover")
 class ReplicaSetFailoverTest {
 
     private static ClientMongoRepository clientRepo;
@@ -29,26 +29,21 @@ class ReplicaSetFailoverTest {
     static void setup() throws Exception {
         System.out.println("Uruchamianie testu Failover...");
 
-        // 1. NAJPIERW zarządzamy kontenerami
-        System.out.println("Restartowanie klastra docker-compose dla czystego testu...");
-        runDockerCommand("docker-compose down --volumes", false);
-        runDockerCommand("docker-compose up -d", true);
-        System.out.println("Oczekiwanie 45 sekund na stabilizację klastra...");
-        TimeUnit.SECONDS.sleep(45); // Czas na wybór primary
+//        System.out.println("Restartowanie klastra docker-compose dla czystego testu...");
+//        runDockerCommand("docker-compose down --volumes", false);
+//        runDockerCommand("docker-compose up -d", true);
+//        System.out.println("Oczekiwanie 45 sekund na stabilizację klastra...");
+//        TimeUnit.SECONDS.sleep(45);
 
-        // 2. DOPIERO TERAZ łączymy się z bazą
         MongoDbManager.init();
         db = MongoDbManager.getDatabase();
         clientRepo = new ClientMongoRepository();
-
-        // 3. Czyścimy bazę danych (teraz połączenie powinno działać)
         db.getCollection("clients").drop();
     }
 
     @AfterAll
     static void tearDown() {
         MongoDbManager.close();
-        // Na koniec testu, uruchamiamy ponownie zatrzymany kontener, aby przywrócić stan
         System.out.println("Przywracanie zatrzymanego kontenera...");
         runDockerCommand("docker-compose start " + primaryBeforeStop, false);
     }
@@ -87,11 +82,8 @@ class ReplicaSetFailoverTest {
         Client client2 = new Client("Po", "Awarii");
         boolean writeSuccess = false;
 
-        // Sterownik MongoDB (zgodny z replica-set) powinien sam obsłużyć failover.
-        // Dajemy mu na to kilka prób (do 30 sekund).
         for (int i = 0; i < 10; i++) {
             try {
-                // Ta operacja zapisu na początku może się nie udać, dopóki nowy primary nie zostanie wybrany
                 clientRepo.save(client2);
                 writeSuccess = true;
                 System.out.println("Zapis po awarii udany!");
@@ -114,32 +106,28 @@ class ReplicaSetFailoverTest {
 
         assertEquals(2, clients.size(), "Liczba klientów w bazie się nie zgadza.");
 
-        // Weryfikacja spójności (+1 pkt z kryterium 7)
         assertTrue(clients.stream().anyMatch(c -> c.getFirstName().equals("Przed")), "Brak danych zapisanych PRZED awarią.");
         assertTrue(clients.stream().anyMatch(c -> c.getFirstName().equals("Po")), "Brak danych zapisanych PO awarii.");
 
         System.out.println("Test spójności zdany. Dane przed i po awarii są obecne.");
     }
 
-    // === Metody Pomocnicze ===
 
     private static String getContainerName(String mongoHostPort) {
-        // Mongo zwraca np. "mongo1:27017"
         if (mongoHostPort == null) return null;
-        if (mongoHostPort.startsWith("mongo1")) return "mongo1";
-        if (mongoHostPort.startsWith("mongo2")) return "mongo2";
-        if (mongoHostPort.startsWith("mongo3")) return "mongo3";
+        if (mongoHostPort.startsWith("mongodb1")) return "mongo_1";
+        if (mongoHostPort.startsWith("mongodb2")) return "mongo_2";
+        if (mongoHostPort.startsWith("mongodb3")) return "mongo_3";
         return null;
     }
 
     private static void runDockerCommand(String command, boolean waitFor) {
         try {
             ProcessBuilder pb = new ProcessBuilder(command.split(" "));
-            pb.directory(new File(dockerComposeDir)); // Uruchom w katalogu z docker-compose.yml
+            pb.directory(new File(dockerComposeDir));
             Process p = pb.start();
 
             if (waitFor) {
-                // Log output
                 new Thread(() -> {
                     try (BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
                         String line;

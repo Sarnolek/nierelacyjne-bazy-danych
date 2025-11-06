@@ -39,7 +39,6 @@ class SportsFacilityMongoRepositoryTest {
         Optional<SportsFacility> found = facilityRepo.findById(gym.getId());
 
         assertTrue(found.isPresent());
-        // Weryfikacja polimorfizmu - czy odzyskany obiekt jest instancją Gym
         assertInstanceOf(Gym.class, found.get(), "Odzyskany obiekt nie jest siłownią (Gym)");
 
         Gym foundGym = (Gym) found.get();
@@ -96,7 +95,6 @@ class SportsFacilityMongoRepositoryTest {
         List<SportsFacility> facilities = facilityRepo.findAll();
         assertEquals(3, facilities.size());
 
-        // Weryfikujemy, czy lista zawiera obiekty różnych, poprawnych typów
         assertTrue(facilities.stream().anyMatch(f -> f instanceof Gym));
         assertTrue(facilities.stream().anyMatch(f -> f instanceof SwimmingPool));
         assertTrue(facilities.stream().anyMatch(f -> f instanceof TennisCourt));

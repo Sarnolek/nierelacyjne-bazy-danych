@@ -22,7 +22,11 @@
             <artifactId>mongodb-driver-sync</artifactId>
             <version>${mongodb-driver.version}</version>
         </dependency>
-
+        <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongodb-crypt</artifactId>
+        <version>5.6.1</version>
+        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

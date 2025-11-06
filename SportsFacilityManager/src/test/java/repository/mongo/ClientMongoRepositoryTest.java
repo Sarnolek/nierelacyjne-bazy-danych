@@ -17,7 +17,6 @@ class ClientMongoRepositoryTest {
 
     @BeforeAll
     static void setup() {
-        // Łączy się z klastrem z docker-compose.yml
         MongoDbManager.init();
     }
 
@@ -28,7 +27,6 @@ class ClientMongoRepositoryTest {
 
     @BeforeEach
     void setupEach() {
-        // Czyści kolekcję przed każdym testem
         MongoDbManager.getDatabase().getCollection("clients").drop();
         clientRepo = new ClientMongoRepository();
     }
@@ -55,8 +53,8 @@ class ClientMongoRepositoryTest {
         UUID id = client.getId();
 
         Client toUpdate = new Client("Anna (zmienione)", "Nowak-Zarębska");
-        toUpdate.setId(id); // Ustawiamy to samo ID
-        clientRepo.save(toUpdate); // Metoda save() działa jak upsert
+        toUpdate.setId(id);
+        clientRepo.save(toUpdate);
 
         Optional<Client> found = clientRepo.findById(id);
         assertEquals(1, clientRepo.findAll().size(), "Powinien być tylko jeden klient");
