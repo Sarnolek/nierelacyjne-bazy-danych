@@ -1,5 +1,3 @@
-// W pliku: SportsFacilityManager/src/main/java/Main.java
-
 import com.mongodb.MongoCommandException;
 import com.mongodb.client.model.CreateCollectionOptions;
 import com.mongodb.client.model.ValidationAction;
@@ -109,20 +107,19 @@ public class Main {
 
         try {
             Rental rental1 = rentalService.rentFacility(client1.getId(), gym.getId(), start1, end1);
-            System.out.println("✅ Stworzono rezerwację 1: " + client1.getFirstName() + " na " + gym.getName());
+            System.out.println("Stworzono rezerwację 1: " + client1.getFirstName() + " na " + gym.getName());
 
             Rental rental2 = rentalService.rentFacility(client2.getId(), pool.getId(), start2, end2);
-            System.out.println("✅ Stworzono rezerwację 2: " + client2.getFirstName() + " na " + pool.getName());
+            System.out.println("Stworzono rezerwację 2: " + client2.getFirstName() + " na " + pool.getName());
 
             Rental rental3 = rentalService.rentFacility(client3.getId(), court.getId(), start3, end3);
-            System.out.println("✅ Stworzono rezerwację 3: " + client3.getFirstName() + " na " + court.getName());
+            System.out.println("Stworzono rezerwację 3: " + client3.getFirstName() + " na " + court.getName());
 
         } catch (RentalException e) {
-            System.err.println("❌ BŁĄD podczas tworzenia rezerwacji testowych: " + e.getMessage());
+            System.err.println("BŁĄD podczas tworzenia rezerwacji testowych: " + e.getMessage());
         }
 
         System.out.println("\n--- Wypełnianie danymi zakończone ---");
-        System.out.println("Odśwież MongoDB Compass, aby zobaczyć dane w kolekcjach 'clients', 'facilities' i 'rentals'.");
         MongoDbManager.close();
     }
 }

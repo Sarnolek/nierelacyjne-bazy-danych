@@ -5,44 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2420ae60-e21f-412b-a575-2eea8dcba645" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/nierelacyjne-bazy-danych.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SportsFacilityManager/docker/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/docker/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SportsFacilityManager/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/docker/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SportsFacilityManager/docker/mongod.conf" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/docker/mongod.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/db/MongoDbManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/db/MongoDbManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/Gym.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/Gym.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/Rental.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/Rental.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/SportsFacility.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/SportsFacility.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/SurfaceType.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/SurfaceType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/SwimmingPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/SwimmingPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/TennisCourt.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/TennisCourt.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/ClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/ClientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/InMemoryClientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/InMemoryClientRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/InMemoryRentalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/InMemoryRentalRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/InMemorySportsFacilityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/InMemorySportsFacilityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/RentalRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/RentalRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/SportsFacilityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/SportsFacilityRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/mongo/ClientMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/mongo/ClientMongoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/mongo/RentalMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/mongo/RentalMongoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/mongo/SportsFacilityMongoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/repository/mongo/SportsFacilityMongoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalException.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/cluster/ReplicaSetFailoverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/cluster/ReplicaSetFailoverTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/repository/mongo/ClientMongoRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/repository/mongo/ClientMongoRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/repository/mongo/SportsFacilityMongoRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/repository/mongo/SportsFacilityMongoRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/service/RentalServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/service/RentalServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +25,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "karoldawid"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/Sarnolek/nierelacyjne-bazy-danych.git",
+    "accountId": "a9befd98-a180-42df-9462-6bfa4790a785"
+  }
+}]]></component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
@@ -80,21 +62,23 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "MongoDB",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/karol/OneDrive/Pulpit/sem 5/nierelacyjne-bazy-danych",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="JUnit.ReplicaSetFailoverTest">
+  <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="SportsFacilityManager" />
@@ -186,7 +170,10 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762366977207</updated>
-      <workItem from="1762366979162" duration="15774000" />
+      <workItem from="1762366979162" duration="16380000" />
+      <workItem from="1762389269906" duration="19000" />
+      <workItem from="1762389304080" duration="52000" />
+      <workItem from="1762389370043" duration="372000" />
     </task>
     <servers />
   </component>
