@@ -3,6 +3,7 @@ import com.mongodb.client.model.CreateCollectionOptions;
 import com.mongodb.client.model.ValidationAction;
 import com.mongodb.client.model.ValidationOptions;
 import db.MongoDbManager;
+import db.RedisDbManager;
 import model.*; // Importuje wszystkie modele
 import org.bson.Document;
 import repository.ClientRepository;
@@ -11,6 +12,8 @@ import repository.SportsFacilityRepository;
 import repository.mongo.ClientMongoRepository;
 import repository.mongo.RentalMongoRepository;
 import repository.mongo.SportsFacilityMongoRepository;
+import repository.redis.ClientRepositoryRedisDecorator;
+import repository.redis.SportsFacilityRepositoryRedisDecorator;
 import service.RentalException;
 import service.RentalService;
 import service.RentalServiceImpl;
@@ -20,6 +23,7 @@ import java.time.LocalDateTime;
 public class Main {
     public static void main(String[] args) {
         MongoDbManager.init();
+        RedisDbManager.init();
         System.out.println("Nawiązano połączenie z bazą danych.");
 
         try {
@@ -64,8 +68,10 @@ public class Main {
 
         System.out.println("--- Inicjalizacja zakończona. Wypełnianie bazy danymi... ---");
 
-        ClientRepository clientRepo = new ClientMongoRepository();
-        SportsFacilityRepository facilityRepo = new SportsFacilityMongoRepository();
+        ClientRepository mongoClientRepo = new ClientMongoRepository();
+        ClientRepository clientRepo = new ClientRepositoryRedisDecorator(mongoClientRepo);
+        SportsFacilityRepository mongoFacilityRepo = new SportsFacilityMongoRepository();
+        SportsFacilityRepository facilityRepo = new SportsFacilityRepositoryRedisDecorator(mongoFacilityRepo);
         RentalRepository rentalRepo = new RentalMongoRepository();
         RentalService rentalService = new RentalServiceImpl(clientRepo, facilityRepo, rentalRepo);
 
@@ -121,5 +127,6 @@ public class Main {
 
         System.out.println("\n--- Wypełnianie danymi zakończone ---");
         MongoDbManager.close();
+        RedisDbManager.close();
     }
 }

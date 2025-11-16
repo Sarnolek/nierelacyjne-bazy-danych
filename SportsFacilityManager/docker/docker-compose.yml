@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
   mongo_1:
     build:
@@ -95,8 +97,20 @@ services:
         );
       "
 
+  redis-stack:
+    image: redis/redis-stack:latest
+    volumes:
+      - redis-stack-data:/bitnami/redis/data
+    ports:
+      - "8001:8001"
+      - "6379:6379"
+    networks:
+      - redisnet
+
+
 networks:
   mongonet: {}
+  redisnet: {}
 
 volumes:
   mongo-db-data-1:
@@ -105,3 +119,5 @@ volumes:
   mongo-configdb-data-2:
   mongo-db-data-3:
   mongo-configdb-data-3:
+  redis-stack-data:
+    driver: local
