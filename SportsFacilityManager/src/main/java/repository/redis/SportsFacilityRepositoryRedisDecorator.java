@@ -13,13 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 
-/**
- * DEKORATOR:
- * Ta klasa "opakowuje" repozytorium SportsFacility (np. Mongo)
- * i dodaje do niego funkcjonalność cache'owania w Redis.
- * Implementuje ten sam interfejs,
- * dzięki czemu z punktu widzenia reszty aplikacji jest "przezroczysta".
- */
+
 public class SportsFacilityRepositoryRedisDecorator implements SportsFacilityRepository {
 
     private final SportsFacilityRepository innerRepository; //wewnetrrzne repozytorum(chodzi o mongosa)
@@ -35,13 +29,12 @@ public class SportsFacilityRepositoryRedisDecorator implements SportsFacilityRep
 
     @Override
     public SportsFacility save(SportsFacility sportsFacility) {
-        // --- KROK 1: Zapisz w "źródle prawdy" (Mongo) ---
+
         SportsFacility savedFacility = innerRepository.save(sportsFacility);
 
-        // --- KROK 2: Unieważnij (usuń) dane w Cache (Redis) ---
         String key = KEY_PREFIX + savedFacility.getId().toString();
         try (Jedis jedis = RedisDbManager.getJedis()) {
-            jedis.del(key); // Usuwamy klucz
+            jedis.del(key);
         } catch (JedisException e) {
             System.err.println("Błąd unieważniania cache'a w Redis (DEL facility): " + e.getMessage());
         }
@@ -50,9 +43,7 @@ public class SportsFacilityRepositoryRedisDecorator implements SportsFacilityRep
     }
 
 
-    /**
-     * Metoda READ (Odczyt) - Główna logika Cache-Aside.
-     */
+
     @Override
     public Optional<SportsFacility> findById(UUID id) {
         String key = KEY_PREFIX + id.toString();
@@ -81,7 +72,6 @@ public class SportsFacilityRepositoryRedisDecorator implements SportsFacilityRep
             }
         }
 
-        // Zwracamy dane, które pobraliśmy z Mongo
         return facilityFromMongo;
     }
 

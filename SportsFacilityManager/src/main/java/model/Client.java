@@ -17,8 +17,8 @@ public class Client {
     // boolean isActive;
     // jeszcze login
 
-//    public Client() {
-//    }
+    public Client() {
+    }
 
         @BsonCreator
     public Client(@BsonProperty("first_name") String firstName, @BsonProperty("last_name") String lastName) {
