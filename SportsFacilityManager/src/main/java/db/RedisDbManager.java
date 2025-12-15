@@ -54,7 +54,7 @@ public class RedisDbManager {
         try (InputStream input = RedisDbManager.class.getClassLoader().getResourceAsStream("application.properties")) {
 
             if (input == null) {
-                System.err.println("Nie znaleziono pliku application.properties! Używam wartości domyślnych.");
+                System.err.println("Nie znaleziono pliku application.properties!");
 
                 redisHost = "localhost";
                 redisPort = 6379;
@@ -76,7 +76,7 @@ public class RedisDbManager {
 
     public static Jedis getJedis() {
         if (jedisPool == null) {
-            System.err.println("Pula nie została zainicjowana! Wywołuję init().");
+            System.err.println("Pula nie została zainicjowana.");
             init();
         }
         return jedisPool.getResource();

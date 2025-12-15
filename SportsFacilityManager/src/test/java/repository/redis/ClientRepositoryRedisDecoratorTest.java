@@ -38,7 +38,7 @@ class ClientRepositoryRedisDecoratorTest {
 
     @Test
     void testFindById_CacheHit() {
-        System.out.println("\n--- TEST 1: Cache HIT (Dane są w Redis) ---");
+        System.out.println("\n Cache HIT");
         UUID id = UUID.randomUUID();
         Client clientInRedis = new Client("Redis", "Hit");
         clientInRedis.setId(id);
@@ -61,7 +61,7 @@ class ClientRepositoryRedisDecoratorTest {
 
     @Test
     void testFindById_CacheMiss() {
-        System.out.println("\n--- TEST 2: Cache MISS (Brak w Redis -> Mongo -> Zapis w Redis) ---");
+        System.out.println("\n Cache MISS");
 
         UUID id = UUID.randomUUID();
         Client clientInMongo = new Client("Mongo", "Db");
@@ -86,7 +86,7 @@ class ClientRepositoryRedisDecoratorTest {
 
     @Test
     void testSave_InvalidatesCache() {
-        System.out.println("\n--- TEST 3: Zapis (Inwalidacja Cache) ---");
+        System.out.println("\nTEST 3: Zapis");
         Client client = new Client("Jan", "Update");
         UUID id = UUID.randomUUID();
         client.setId(id);
@@ -106,7 +106,7 @@ class ClientRepositoryRedisDecoratorTest {
 
     @Test
     void testFindById_RedisFailure_FailoverToMongo() {
-        System.out.println("\n--- TEST 4: Awaria Redis (Failover) ---");
+        System.out.println("\n Awaria Redis");
         UUID id = UUID.randomUUID();
         Client clientInMongo = new Client("Failover", "Client");
 

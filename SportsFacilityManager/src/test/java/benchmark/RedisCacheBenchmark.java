@@ -45,7 +45,7 @@ public class RedisCacheBenchmark {
 
         mongoOnlyRepo.save(client);
 
-        System.out.println("--- SETUP ZAKOŃCZONY: Klient ID " + testClientId + " zapisany ---");
+        System.out.println("SETUP ZAKOŃCZONY: Klient ID " + testClientId + " zapisany");
     }
 
 

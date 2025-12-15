@@ -4,7 +4,7 @@ import com.mongodb.client.model.ValidationAction;
 import com.mongodb.client.model.ValidationOptions;
 import db.MongoDbManager;
 import db.RedisDbManager;
-import model.*; // Importuje wszystkie modele
+import model.*;
 import org.bson.Document;
 import repository.ClientRepository;
 import repository.RentalRepository;

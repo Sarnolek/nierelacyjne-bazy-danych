@@ -16,9 +16,8 @@ import java.util.UUID;
 
 public class SportsFacilityRepositoryRedisDecorator implements SportsFacilityRepository {
 
-    private final SportsFacilityRepository innerRepository; //wewnetrrzne repozytorum(chodzi o mongosa)
+    private final SportsFacilityRepository innerRepository;
     private static final String KEY_PREFIX = "facility:";
-    //czas zycia cahe
     private static final long CACHE_TTL_SEC = 600;
 
     public SportsFacilityRepositoryRedisDecorator(SportsFacilityRepository innerRepository) {
