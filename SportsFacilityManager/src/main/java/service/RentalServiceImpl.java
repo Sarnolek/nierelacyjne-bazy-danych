@@ -7,16 +7,25 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
+import db.KafkaTopicManager;
 import db.MongoDbManager;
 import model.Client;
 import model.Rental;
+import model.RentalEvent;
 import model.SportsFacility;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.protocol.types.Field;
+import org.apache.kafka.common.serialization.StringSerializer;
 import repository.ClientRepository;
 import repository.RentalRepository;
 import repository.SportsFacilityRepository;
+import util.JsonbManager;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 public class RentalServiceImpl implements RentalService{
@@ -36,7 +45,19 @@ public class RentalServiceImpl implements RentalService{
         this.mongoClient = MongoDbManager.getMongoClient();
         this.rentalCollection = MongoDbManager.getDatabase().getCollection("rentals", Rental.class);
         this.facilityCollection = MongoDbManager.getDatabase().getCollection("facilities", SportsFacility.class);
+
+        Properties props = new Properties();
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaTopicManager.getBootstrapServers());
+        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        props.put(ProducerConfig.ACKS_CONFIG, "all");
+
+        this.kafkaProducer = new KafkaProducer<>(props);
+
     }
+
+    private final KafkaProducer<String, String> kafkaProducer;
+
 
     @Override
     public Rental rentFacility(UUID clientId, UUID facilityId, LocalDateTime startTime, LocalDateTime endTime) throws RentalException {
@@ -49,8 +70,9 @@ public class RentalServiceImpl implements RentalService{
 
         clientRepository.findById(clientId)
                 .orElseThrow(() -> new RentalException("Klient o ID: " + clientId + " nie istnieje."));
-        sportsFacilityRepository.findById(facilityId)
+        SportsFacility facility = sportsFacilityRepository.findById(facilityId)
                 .orElseThrow(() -> new RentalException("Obiekt sportowy o ID: " + facilityId + " nie istnieje."));
+
 
 
         try (ClientSession session = mongoClient.startSession()) {
@@ -72,6 +94,19 @@ public class RentalServiceImpl implements RentalService{
                 rentalCollection.insertOne(session, newRental);
 
                 session.commitTransaction();
+                try {
+                    RentalEvent event = new model.RentalEvent(newRental, facility.getName());
+                    String jsonPayload = JsonbManager.jsonb.toJson(event);
+                    ProducerRecord<String, String> record = new ProducerRecord<>(
+                            KafkaTopicManager.TOPIC_NAME,
+                            newRental.getId().toString(),
+                            jsonPayload
+                    );
+                    kafkaProducer.send(record);
+
+                } catch (Exception e){
+                    System.out.println("Kafka error: " + e.getMessage());
+                }
                 return newRental;
 
             } catch (MongoWriteException e) {

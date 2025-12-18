@@ -1,11 +1,6 @@
-import com.mongodb.MongoCommandException;
-import com.mongodb.client.model.CreateCollectionOptions;
-import com.mongodb.client.model.ValidationAction;
-import com.mongodb.client.model.ValidationOptions;
 import db.MongoDbManager;
 import db.RedisDbManager;
 import model.*;
-import org.bson.Document;
 import repository.ClientRepository;
 import repository.RentalRepository;
 import repository.SportsFacilityRepository;
@@ -14,26 +9,69 @@ import repository.mongo.RentalMongoRepository;
 import repository.mongo.SportsFacilityMongoRepository;
 import repository.redis.ClientRepositoryRedisDecorator;
 import repository.redis.SportsFacilityRepositoryRedisDecorator;
+import service.RentalAnalyticsConsumer;
 import service.RentalException;
 import service.RentalService;
 import service.RentalServiceImpl;
+import com.mongodb.client.model.CreateCollectionOptions;
+import com.mongodb.client.model.ValidationAction;
+import com.mongodb.client.model.ValidationOptions;
+import org.bson.Document;
+import com.mongodb.MongoCommandException;
 
 import java.time.LocalDateTime;
+import java.util.Scanner;
+import java.util.UUID;
 
 public class Main {
+
     public static void main(String[] args) {
         MongoDbManager.init();
         RedisDbManager.init();
-        System.out.println("Nawiązano połączenie z bazą danych.");
+        db.KafkaTopicManager.createTopic();
 
+        String mode = (args.length > 0) ? args[0] : "help";
+
+        switch (mode) {
+            case "setup":
+                runSetup();
+                break;
+            case "consumer":
+                runConsumer();
+                break;
+            case "producer":
+                runProducer();
+                break;
+            default:
+                System.out.println("1. setup    -> Czyści bazę i przygotowuje kolekcje");
+                System.out.println("2. consumer -> Uruchamia proces konsumenta (odpal w wielu oknach)");
+                System.out.println("3. producer -> Wysyła nowe dane (rezerwacje) do Kafki");
+                runSetup();
+                new Thread(Main::runConsumer).start();
+                try { Thread.sleep(2000); } catch (InterruptedException e) {}
+                runProducer();
+        }
+
+        if (mode.equals("consumer")) {
+            System.out.println("Naciśnij Enter, aby zakończyć konsumenta...");
+            new Scanner(System.in).nextLine();
+        } else if (!mode.equals("help")) {
+            try { Thread.sleep(2000); } catch (InterruptedException e) {}
+            MongoDbManager.close();
+            RedisDbManager.close();
+        }
+    }
+
+    private static void runSetup() {
+        System.out.println("URUCHAMIANIE SETUPU (Czyszczenie bazy)");
         try {
-            System.out.println("Czyszczenie starych danych...");
             MongoDbManager.getDatabase().getCollection("facilities").drop();
             MongoDbManager.getDatabase().getCollection("clients").drop();
             MongoDbManager.getDatabase().getCollection("rentals").drop();
+            MongoDbManager.getDatabase().getCollection("rental_analytics").drop();
             System.out.println("Kolekcje wyczyszczone.");
         } catch (Exception e) {
-            System.out.println("Brak kolekcji do wyczyszczenia, kontynuuję...");
+            System.out.println("Brak kolekcji do wyczyszczenia.");
         }
 
         try {
@@ -44,8 +82,7 @@ public class Main {
                     "      is_rented: {" +
                     "        bsonType: 'int'," +
                     "        minimum: 0," +
-                    "        maximum: 1," +
-                    "        description: 'musi byc 0 (wolny) lub 1 (zajety)'" +
+                    "        maximum: 1" +
                     "      }" +
                     "    }" +
                     "  }" +
@@ -57,76 +94,54 @@ public class Main {
                     "facilities",
                     new CreateCollectionOptions().validationOptions(validationOptions)
             );
-            System.out.println("Kolekcja 'facilities' stworzona z walidacją.");
+            System.out.println("Kolekcja 'facilities' stworzona.");
         } catch (MongoCommandException e) {
-            if (e.getErrorCode() == 48) {
-                System.out.println("Kolekcja 'facilities' już istnieje. Walidacja powinna być aktywna.");
-            } else {
-                System.err.println("Błąd przy tworzeniu kolekcji: " + e.getMessage());
-            }
         }
 
-        System.out.println("--- Inicjalizacja zakończona. Wypełnianie bazy danymi... ---");
+        ClientRepository clientRepo = new ClientRepositoryRedisDecorator(new ClientMongoRepository());
+        SportsFacilityRepository facilityRepo = new SportsFacilityRepositoryRedisDecorator(new SportsFacilityMongoRepository());
 
-        ClientRepository mongoClientRepo = new ClientMongoRepository();
-        ClientRepository clientRepo = new ClientRepositoryRedisDecorator(mongoClientRepo);
-        SportsFacilityRepository mongoFacilityRepo = new SportsFacilityMongoRepository();
-        SportsFacilityRepository facilityRepo = new SportsFacilityRepositoryRedisDecorator(mongoFacilityRepo);
+        clientRepo.save(new Client("Jan", "Kowalski"));
+        clientRepo.save(new Client("Anna", "Nowak"));
+
+        facilityRepo.save(new Gym("Siłownia Gold", 50.0, 20, 300, true));
+        facilityRepo.save(new SwimmingPool("Pływalnia Fala", 80.0, 50, 25, 6));
+        facilityRepo.save(new TennisCourt("Korty Rakieta", 65.0, 4, SurfaceType.CLAY, false));
+
+        System.out.println(">>> SETUP ZAKOŃCZONY. Baza gotowa.");
+    }
+
+    private static void runConsumer() {
+        String instanceId = "Konsument-" + UUID.randomUUID().toString().substring(0, 4);
+        System.out.println(">>> STARTUJĘ KONSUMENTA: " + instanceId);
+
+        new RentalAnalyticsConsumer(instanceId).run();
+    }
+
+    private static void runProducer() {
+        System.out.println(">>> STARTUJĘ PRODUCENTA (Tworzenie rezerwacji)...");
+
+        ClientRepository clientRepo = new ClientRepositoryRedisDecorator(new ClientMongoRepository());
+        SportsFacilityRepository facilityRepo = new SportsFacilityRepositoryRedisDecorator(new SportsFacilityMongoRepository());
         RentalRepository rentalRepo = new RentalMongoRepository();
         RentalService rentalService = new RentalServiceImpl(clientRepo, facilityRepo, rentalRepo);
 
-        System.out.println("\n--- Tworzenie Klientów ---");
-        Client client1 = new Client("Jan", "Kowalski");
-        Client client2 = new Client("Anna", "Nowak");
-        Client client3 = new Client("Piotr", "Wiśniewski");
-
-        clientRepo.save(client1);
-        clientRepo.save(client2);
-        clientRepo.save(client3);
-        System.out.println("Dodano 3 klientów do kolekcji 'clients'.");
-
-        System.out.println("\n--- Tworzenie Obiektów Sportowych ---");
-
-        SportsFacility gym = new Gym("Siłownia Gold", 50.0, 20, 300, true);
-        SportsFacility pool = new SwimmingPool("Pływalnia Fala", 80.0, 50, 25, 6);
-        SportsFacility court = new TennisCourt("Korty Rakieta", 65.0, 4, SurfaceType.CLAY, false);
-
-        facilityRepo.save(gym);
-        facilityRepo.save(pool);
-        facilityRepo.save(court);
-
-        System.out.println("Dodano 3 obiekty (Gym, SwimmingPool, TennisCourt) do kolekcji 'facilities'.");
-        System.out.println("Sprawdź pole '_t' w MongoDB Compass, aby zobaczyć dyskryminator.");
-        System.out.println(" -> " + gym.getName() + " (is_rented: " + gym.getIsRented() + ")");
-        System.out.println(" -> " + pool.getName() + " (is_rented: " + pool.getIsRented() + ")");
-        System.out.println(" -> " + court.getName() + " (is_rented: " + court.getIsRented() + ")");
-
-        System.out.println("\n--- Tworzenie Rezerwacji ---");
-        LocalDateTime start1 = LocalDateTime.now().plusDays(1).withHour(10).withMinute(0);
-        LocalDateTime end1 = start1.plusHours(2);
-
-        LocalDateTime start2 = LocalDateTime.now().plusDays(2).withHour(14).withMinute(0);
-        LocalDateTime end2 = start2.plusHours(1);
-
-        LocalDateTime start3 = LocalDateTime.now().plusDays(3).withHour(10).withMinute(0);
-        LocalDateTime end3 = start3.plusHours(1);
-
         try {
-            Rental rental1 = rentalService.rentFacility(client1.getId(), gym.getId(), start1, end1);
-            System.out.println("Stworzono rezerwację 1: " + client1.getFirstName() + " na " + gym.getName());
+            Client client = clientRepo.findAll().get(0);
+            SportsFacility facility = facilityRepo.findAll().stream()
+                    .filter(f -> f.getIsRented() == 0)
+                    .findFirst()
+                    .orElse(facilityRepo.findAll().get(0));
 
-            Rental rental2 = rentalService.rentFacility(client2.getId(), pool.getId(), start2, end2);
-            System.out.println("Stworzono rezerwację 2: " + client2.getFirstName() + " na " + pool.getName());
+            LocalDateTime start = LocalDateTime.now().plusDays(1).withHour(12).withMinute(0);
+            LocalDateTime end = start.plusHours(1);
 
-            Rental rental3 = rentalService.rentFacility(client3.getId(), court.getId(), start3, end3);
-            System.out.println("Stworzono rezerwację 3: " + client3.getFirstName() + " na " + court.getName());
+            System.out.println("Próba wypożyczenia: " + facility.getName() + " dla " + client.getFirstName());
+            rentalService.rentFacility(client.getId(), facility.getId(), start, end);
 
-        } catch (RentalException e) {
-            System.err.println("BŁĄD podczas tworzenia rezerwacji testowych: " + e.getMessage());
+            System.out.println(">>> PRODUCENT: Wysłano rezerwację.");
+        } catch (Exception e) {
+            System.err.println("Błąd producenta: " + e.getMessage());
         }
-
-        System.out.println("\n--- Wypełnianie danymi zakończone ---");
-        MongoDbManager.close();
-        RedisDbManager.close();
     }
 }

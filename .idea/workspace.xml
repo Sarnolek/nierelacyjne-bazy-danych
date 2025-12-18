@@ -5,10 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2420ae60-e21f-412b-a575-2eea8dcba645" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/nierelacyjne-bazy-danych.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/db/KafkaTopicManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/model/RentalEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalAnalyticsConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SportsFacilityManager/src/test/java/service/KafkaEndToEndTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/docker/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/docker/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SportsFacilityManager/docker/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/docker/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/docker/mongod.conf" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/docker/mongod.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/SportsFacilityManager/src/main/java/service/RentalServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,22 +36,22 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "karoldawid"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;karoldawid&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Sarnolek/nierelacyjne-bazy-danych.git",
-    "accountId": "a9befd98-a180-42df-9462-6bfa4790a785"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Sarnolek/nierelacyjne-bazy-danych.git&quot;,
+    &quot;accountId&quot;: &quot;a9befd98-a180-42df-9462-6bfa4790a785&quot;
   }
-}]]></component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+}</component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 4
@@ -54,6 +65,7 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "JUnit.ClientMongoRepositoryTest.executor": "Run",
+    "JUnit.KafkaEndToEndTest.executor": "Run",
     "JUnit.RentalServiceTest.executor": "Run",
     "JUnit.ReplicaSetFailoverTest.executor": "Run",
     "JUnit.SportsFacilityMongoRepositoryTest.executor": "Run",
@@ -62,10 +74,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "MongoDB",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "Kafka",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/karol/OneDrive/Pulpit/sem 5/nierelacyjne-bazy-danych",
+    "last_opened_file_path": "D:/studia/semestr5/NBD/nierelacyjne-bazy-danych",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -79,9 +92,20 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="SportsFacilityManager" />
+      <option name="PROGRAM_PARAMETERS" value="producer" />
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" IS_EXECUTABLE="false" />
+        </ENTRIES>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -145,12 +169,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.RentalServiceTest" />
+      <item itemvalue="JUnit.ReplicaSetFailoverTest" />
+      <item itemvalue="JUnit.repository.mongo in SportsFacilityManager" />
+      <item itemvalue="JUnit.SportsFacilityMongoRepositoryTest" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.ReplicaSetFailoverTest" />
         <item itemvalue="JUnit.RentalServiceTest" />
         <item itemvalue="JUnit.repository.mongo in SportsFacilityManager" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="JUnit.SportsFacilityMongoRepositoryTest" />
       </list>
     </recent_temporary>
@@ -158,8 +189,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.27397.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.27397.103" />
       </set>
     </attachedChunks>
   </component>
@@ -174,10 +205,24 @@
       <workItem from="1762389269906" duration="19000" />
       <workItem from="1762389304080" duration="52000" />
       <workItem from="1762389370043" duration="372000" />
+      <workItem from="1765842203673" duration="614000" />
+      <workItem from="1765922991249" duration="6536000" />
+      <workItem from="1765997951711" duration="12086000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
